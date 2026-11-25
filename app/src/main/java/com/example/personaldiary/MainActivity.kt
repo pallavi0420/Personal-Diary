@@ -35,7 +35,7 @@ class Roomdaodemo : ComponentActivity() {
     }
 }
 
-// ENTITY
+
 @Entity
 data class diary(
     @PrimaryKey(autoGenerate = true)
@@ -44,7 +44,7 @@ data class diary(
     val content: String
 )
 
-// DAO
+
 @Dao
 interface DiaryDataOperations {
 
@@ -61,7 +61,7 @@ interface DiaryDataOperations {
     suspend fun deleteDiaryData(d: diary)
 }
 
-// DATABASE
+
 @Database(
     entities = [diary::class],
     version = 1
@@ -70,7 +70,7 @@ abstract class DiaryDataAbstraction : RoomDatabase() {
     abstract fun diaryDataDaoOperation(): DiaryDataOperations
 }
 
-// DATABASE OBJECT
+
 object DiaryDataDB {
 
     fun getDiaryDB(c: Context): DiaryDataAbstraction {
@@ -82,7 +82,7 @@ object DiaryDataDB {
     }
 }
 
-// VIEWMODEL
+
 class DiaryRoomArchi(a: Application) : AndroidViewModel(a) {
 
     val db = DiaryDataDB.getDiaryDB(a)
@@ -92,7 +92,7 @@ class DiaryRoomArchi(a: Application) : AndroidViewModel(a) {
 
     var message by mutableStateOf("")
 
-    // INSERT FUNCTION
+   
     fun insertDiaryData(title: String, content: String) {
 
         viewModelScope.launch {
@@ -116,7 +116,7 @@ class DiaryRoomArchi(a: Application) : AndroidViewModel(a) {
         }
     }
 
-    // QUERY FUNCTION
+    
     fun getDiaryData() {
 
         viewModelScope.launch {
@@ -126,7 +126,7 @@ class DiaryRoomArchi(a: Application) : AndroidViewModel(a) {
         }
     }
 
-    // DELETE FUNCTION
+    
     fun deleteDiaryData(d: diary) {
 
         viewModelScope.launch {
@@ -140,7 +140,6 @@ class DiaryRoomArchi(a: Application) : AndroidViewModel(a) {
     }
 }
 
-// COMPOSABLE SCREEN
 @Composable
 fun DiaryScreen(viewModel: DiaryRoomArchi = viewModel()) {
 
